@@ -26,12 +26,12 @@ jobs:
       - name: Validate build
         run: |
           python -m compileall -q app
-          python -o "from app import create_app; create_app()"
+          python -c "from app import create_app; create_app()"
 
       - name: Run tests
         run: |
           bash scripts/pruebas.sh
-          
+
       - name: Publish test results
         if: always()
         uses: actions/upload-artifact@v7

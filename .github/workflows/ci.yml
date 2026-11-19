@@ -1,41 +1,39 @@
 name: CI
+
 on:
   push:
-    branches: [ main, 'feature/*' ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
+
 jobs:
-  CI:
+  ci:
     name: CI
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
 
-      - name: Set up Python
-        uses: actions/setup-python@v7
+      - uses: actions/setup-python@v7
         with:
-          python-version: '3.12'
-          cache: 'pip'
-          cache-dependency-path: 'requirements*.txt'
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: requirements*.txt
 
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements-dev.txt
+      - name: Instalar dependencias
+        run: python -m pip install -r requirements.txt
 
-      - name: Validate build
+      - name: Validar (build)
         run: |
           python -m compileall -q app
           python -c "from app import create_app; create_app()"
 
-      - name: Run tests
-        run: |
-          bash scripts/pruebas.sh
+      - name: Pruebas
+        run: bash scripts/pruebas.sh
 
-      - name: Publish test results
+      - name: Publicar reporte de pruebas
         if: always()
         uses: actions/upload-artifact@v7
         with:
-          name: test-results
-          path: reports/
+          name: reporte-pruebas
+          path: reportes/
           if-no-files-found: error

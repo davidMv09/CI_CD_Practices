@@ -3,4 +3,4 @@
 # Deja el reporte JUnit en reportes/junit.xml.
 set -euo pipefail
 mkdir -p reportes
-python -m pytest --junitxml=reportes/junit.xml "$@"
+python -m pytest --junitxml=reporte/junit.xml "$@"

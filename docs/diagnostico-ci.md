@@ -25,8 +25,8 @@
 
 | Qué | Enlace |
 |---|---|
-| Repositorio en el tag `lab-ci` | https://github.com/<usuario>/api-tareas/tree/lab-ci |
-| Pull request que el check bloqueó (prueba rota a propósito) | <enlace al pull request> |
+| Repositorio en el tag `lab-ci` |https://github.com/davidMv09/CI_CD_Practices/releases/tag/lab-ci |
+| Pull request que el check bloqueó (prueba rota a propósito) |https://github.com/davidMv09/CI_CD_Practices/pull/1 |
 
 ## 2. Diagnóstico de los tres pipelines rotos
 

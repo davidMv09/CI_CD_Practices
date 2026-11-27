@@ -64,3 +64,24 @@ docs/           documentación del flujo de entrega
 requirements.txt       dependencias de la aplicación, con versión fija
 requirements-dev.txt   dependencias para desarrollar y probar
 ```
+
+## Despliegue y Rollback
+
+Cómo saber de qué commit salió una
+imagen, cuándo conviene el rollback y cómo se lanza?
+
+```text
+El tag que le asignamos a las imagenes son el SHA del commit que se utilizo para generar esa imagen.
+El rollback conviene cuando algun pipeline de main esta en verde pero falla en staging o pipelines posteriores.
+Puede lanzarse de forma manual en el apartado de Actions o puede configurarse un job que haga la validacion de los steps y se ejecute en caso de algun fallo.
+```
+
+### version 12
+| IMAGE | ID | DISK USAGE |CONTENT SIZE |EXTRA |
+|--|--|--|--|--|
+|ghcr.io/davidmv09/ci_cd_practices:bc781dd00193e13ffc9c7b2ab0a82d7325924f31  | 8a7c29fa54a4|1.61GB| 414MB|
+
+### version slim
+| IMAGE | ID | DISK USAGE |CONTENT SIZE |EXTRA |
+|--|--|--|--|--|
+|ghcr.io/davidmv09/ci_cd_practices:61391e10671058b3f7f863d976af263425c752b6| 41dbd67a8385 |188MB |45.5MB|

@@ -67,6 +67,26 @@ requirements-dev.txt   dependencias para desarrollar y probar
 
 ## Despliegue y Rollback
 
+### Dockignore files
+
+|Archivo| Justificacion |
+|--|--| 
+| .git | La imagen no necesita el control de cambios del repositorio | 
+| .github | La imagen no necesita los workflows que ejecuta github |  
+| .venv | La imagen no ejecuta virtual enviroments |
+| venv | La imagen no ejecuta virtual enviroments |
+| **/__pycache__ | Los archivos cacheados no deben estar en una imagen nueva |
+|**/*.pyc | Los archivos compilados del programa no deben estar en la imagen |
+| .pytest_cache | El cache de los test solo sirven al ejecutar las pruebas |
+| .ruff_cache | Las validaciones del codigo no son necesarias para contruir la imagen |
+| .coverage | El coverage solo le sirve al pipeline no a la imagen |
+| htmlcov |
+| reportes | Los reportes generados durante el build no los necesita la imagen. |
+| tests | Los test solo son utiles para el build y compilacion, no para generar la imagen |
+| docs | El artefacto no necesita la documentacion del repositorio |
+| .env |
+
+
 Cómo saber de qué commit salió una
 imagen, cuándo conviene el rollback y cómo se lanza?
 

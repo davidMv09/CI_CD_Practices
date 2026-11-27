@@ -143,7 +143,7 @@ jobs:
       - name: Desplegar contenedor
         env:
           IMAGEN: ${{ needs.empaquetar.outputs.imagen }}
-          APP_ENV: ${{ vars.APP_ENV || 'staging' }}
+          APP_ENV: ${{ vars.APP_ENV || 'production' }}
           API_TOKEN: ${{ secrets.API_TOKEN }}
         run: docker run -d --name api -p 8080:8000 -e APP_ENV -e API_TOKEN "$IMAGEN"
       - name: Smoke test

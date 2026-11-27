@@ -4,7 +4,7 @@
 
 | Qué | Enlace |
 |---|---|
-| Repositorio en el tag `lab-cd` | https://github.com/<usuario>/api-tareas/tree/lab-cd |
+| Repositorio en el tag `lab-cd` | https://github.com/davidMv09/CI_CD_Practices/releases/tag/lab-cd |
 | Imagen en GHCR con el tag del SHA (paquete con visibilidad pública) | https://github.com/davidMv09/CI_CD_Practices/pkgs/container/ci_cd_practices/1601625581?tag=61391e10671058b3f7f863d976af263425c752b6|
 | Ejecución completa en verde, con la aprobación de producción | https://github.com/davidMv09/CI_CD_Practices/commit/802dd0307b6e188724775a52171e4bc14ddf7eb4 |
 | Ejecución con la versión defectuosa: staging en rojo y producción sin correr | https://github.com/davidMv09/CI_CD_Practices/actions/runs/45902782924 |
@@ -21,4 +21,4 @@ La sección **Despliegue y rollback** del `README.md` tiene (marcar con `x` cuan
 
 ## 3. Uso de IA
 
-<Qué herramienta se usó y para qué, en una línea, o "No se usó IA".>
+No se usó IA

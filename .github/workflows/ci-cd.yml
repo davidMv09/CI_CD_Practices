@@ -10,9 +10,13 @@ on:
         description: "Laboratorio: desplegar una versión que no arranca en producción"
         type: boolean
         default: false
+permissions:
+  contents: read
 
 jobs:
   CI:
+    permissions:
+      contents: read
     name: CI
     runs-on: ubuntu-latest
     steps:
@@ -47,13 +51,13 @@ jobs:
           path: reports/
           if-no-files-found: error
   empaquetar:
+    permissions:
+      contents: read
+      packages: write
     name: Empaquetar imagen
     needs: CI
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     outputs:
       imagen: ${{ steps.nombre.outputs.imagen }}
     steps:
@@ -97,6 +101,9 @@ jobs:
         run: docker push "$IMAGEN"
 
   staging:
+    permissions:
+      contents: read
+      packages: read
     name: Desplegar en staging
     needs: empaquetar
     runs-on: ubuntu-latest
@@ -110,11 +117,18 @@ jobs:
       - name: Desplegar contenedor
         env:
           IMAGEN: ${{ needs.empaquetar.outputs.imagen }}
-        run: docker run -d --name api -p 8080:8000 -e APP_ENV=staging "$IMAGEN"
+          APP_ENV: ${{ vars.APP_ENV || 'staging' }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: docker run -d --name api -p 8080:8000 -e APP_ENV -e API_TOKEN "$IMAGEN"
       - name: Smoke test
         run: bash scripts/smoke.sh http://localhost:8080
+      - name: Ver el arranque del contenedor
+        run: docker logs api
 
   production:
+    permissions:
+      contents: read
+      packages: read
     name: Desplegar en producción
     needs: [empaquetar, staging]
     runs-on: ubuntu-latest
@@ -129,9 +143,13 @@ jobs:
       - name: Desplegar contenedor
         env:
           IMAGEN: ${{ needs.empaquetar.outputs.imagen }}
-        run: docker run -d --name api -p 8080:8000 -e APP_ENV=production "$IMAGEN"
+          APP_ENV: ${{ vars.APP_ENV || 'production' }}
+          API_TOKEN: ${{ secrets.API_TOKEN }}
+        run: docker run -d --name api -p 8080:8000 -e APP_ENV -e API_TOKEN "$IMAGEN"
       - name: Smoke test
         run: bash scripts/smoke.sh http://localhost:8080
+      - name: Ver el arranque del contenedor
+        run: docker logs api
 
   rollback:
     name: Rollback automático en producción
